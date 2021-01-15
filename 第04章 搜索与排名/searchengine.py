@@ -9,7 +9,7 @@ ignorewords = {'the': 1, 'of': 1, 'to': 1, 'and': 1, 'a': 1, 'in': 1, 'is': 1, '
 
 # import Click-Tracking Model
 import nn
-mynet = nn.searchnet('nn.db')
+mynet = nn.searchnet('豆瓣电影数据库1.db')
 
 class crawler:
     # Initialize the crawler with the name of database
@@ -223,11 +223,16 @@ class searcher:
         #            (1.0, self.linktextscore(rows, wordids)),
         #            (5.0, self.nnscore(rows, wordids))]
 
-        # test code
+        # test code 不同方法结合，点击权重最高
         weights = [(1.0, self.frequencyscore(rows)),
                    (1.0, self.locationscore(rows)),
-                   (1.0)]
-
+                   (1.0, self.pagerankscore(rows)),
+                   (5.0, self.nnscore(rows, wordids))
+                   ]
+        #只考虑点击
+        # weights = [
+        #            (5.0, self.nnscore(rows, wordids))
+        #            ]
         for (weight, scores) in weights:
             for url in totalscores:
                 totalscores[url] += weight * scores[url]

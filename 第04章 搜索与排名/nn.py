@@ -150,14 +150,13 @@ class searchnet:
     def trainquery(self, wordids, urlids, selectedurl):
         # generate a hidden node if necessary
         self.generatehiddennode(wordids, urlids)
-
         self.setupnetwork(wordids, urlids)
         self.feedforward()
         targets = [0.0] * len(urlids)
         targets[urlids.index(selectedurl)] = 1.0
         self.backPropagate(targets)
         self.updatedatabase()
-
+        
     def updatedatabase(self):
         # set them to database values
         for i in range(len(self.wordids)):
